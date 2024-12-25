@@ -11,14 +11,14 @@ RUN dart pub get
 # Install dart_frog globally
 RUN dart pub global activate dart_frog
 
-# Add the global pub cache to PATH
+# Ensure dart_frog is accessible by adding the global pub cache binary directory to PATH
 ENV PATH="$PATH:/root/.pub-cache/bin"
 
 # Verify dart_frog installation
-RUN dart_frog --version
+RUN /root/.pub-cache/bin/dart_frog --version
 
 # Build the Dart Frog application
-RUN dart_frog build
+RUN /root/.pub-cache/bin/dart_frog build
 
 # Use the Dart runtime for production
 FROM dart:stable AS runtime
