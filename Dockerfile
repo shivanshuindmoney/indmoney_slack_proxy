@@ -5,8 +5,16 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Install dependencies and build the project
+# Install dependencies
 RUN dart pub get
+
+# Install dart_frog globally
+RUN dart pub global activate dart_frog
+
+# Ensure dart_frog is accessible in the PATH
+ENV PATH="$PATH:/root/.pub-cache/bin"
+
+# Build the Dart Frog application
 RUN dart_frog build
 
 # Use the Dart runtime for production
