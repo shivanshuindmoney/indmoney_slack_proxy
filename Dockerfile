@@ -11,6 +11,9 @@ RUN dart pub get
 # Install dart_frog globally
 RUN dart pub global activate dart_frog
 
+# Ensure the /root/.pub-cache/bin directory exists
+RUN mkdir -p /root/.pub-cache/bin
+
 # Link dart_frog to the correct binary path
 RUN ln -s /root/.pub-cache/global_packages/dart_frog/bin/dart_frog /root/.pub-cache/bin/dart_frog
 
