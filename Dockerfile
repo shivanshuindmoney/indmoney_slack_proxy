@@ -11,8 +11,8 @@ RUN dart pub get
 # Install dart_frog globally
 RUN dart pub global activate dart_frog
 
-# Debug: Check the location of dart_frog
-RUN find / -name dart_frog
+# Link dart_frog to the correct binary path
+RUN ln -s /root/.pub-cache/global_packages/dart_frog/bin/dart_frog /root/.pub-cache/bin/dart_frog
 
 # Add the global pub cache binary directory to PATH explicitly
 ENV PATH="/root/.pub-cache/bin:$PATH"
