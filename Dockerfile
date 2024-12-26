@@ -11,11 +11,16 @@ RUN dart pub get
 # Install dart_frog globally
 RUN dart pub global activate dart_frog
 
-# Use the exact path of the dart_frog binary
-RUN /root/.pub-cache/global_packages/dart_frog/bin/dart_frog --version
+# Find and link the dart_frog binary to a standard location
+RUN export DART_FROG_PATH=$(find /root/.pub-cache/ -type f -name dart_frog -executable | head -n 1) && \
+    echo "Dart Frog Binary Found At: $DART_FROG_PATH" && \
+    ln -s $DART_FROG_PATH /usr/local/bin/dart_frog
+
+# Verify dart_frog installation
+RUN dart_frog --version
 
 # Build the Dart Frog application
-RUN /root/.pub-cache/global_packages/dart_frog/bin/dart_frog build
+RUN dart_frog build
 
 # Use the Dart runtime for production
 FROM dart:stable AS runtime
