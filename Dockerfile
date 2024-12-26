@@ -11,11 +11,11 @@ RUN dart pub get
 # Install dart_frog globally
 RUN dart pub global activate dart_frog
 
-# Dynamically find the dart_frog binary and verify it
-RUN DART_FROG_BINARY=$(find /root/.pub-cache/ -type f -name dart_frog -executable | head -n 1) && \
+# Dynamically find the dart_frog binary and ensure it's logged
+RUN find /root/.pub-cache/ -type f -name dart_frog -executable | tee /tmp/dart_frog_path.log && \
+    DART_FROG_BINARY=$(find /root/.pub-cache/ -type f -name dart_frog -executable | head -n 1) && \
     echo "Dart Frog Binary Found At: $DART_FROG_BINARY" && \
-    $DART_FROG_BINARY --version && \
-    $DART_FROG_BINARY build
+    [ -n "$DART_FROG_BINARY" ] && $DART_FROG_BINARY --version && $DART_FROG_BINARY build
 
 # Use the Dart runtime for production
 FROM dart:stable AS runtime
