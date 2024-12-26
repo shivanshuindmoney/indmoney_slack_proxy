@@ -7,7 +7,9 @@ COPY . .
 
 # Install dependencies and build the project
 RUN dart pub get
+RUN dart pub global activate dart_frog_cli
 RUN dart_frog build
+RUN dart_frog dev
 
 # Use the Dart runtime for production
 FROM dart:stable AS runtime
